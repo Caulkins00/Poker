@@ -3,6 +3,15 @@ from itertools import combinations
 
 status = [False]*52
 
+def promptInput(numCards):
+    cards = []
+    for x in range(numCards):
+        card = parseInput(input("Enter a card: "))
+        while any(i == card for i in cards):
+            card = parseInput(input("Card is already in play. Please try again: "))
+        cards.append(card)
+    return cards
+
 def parseInput(card):
     suit = card[-1]
     card = card[:-1]
@@ -349,22 +358,24 @@ def isPair(cards):
                 return True
     return False
 
-dealtCards = ["2d","3h","4s","5c","6h"]
-myCards = ["7s","9d"]
-for i in range(len(myCards)):
-    myCards[i] = parseInput(myCards[i])
-for i in range(len(dealtCards)):
-    dealtCards[i] = parseInput(dealtCards[i])
+print("\nHello! Welcome to the Poker Odds Calculator.\n")
+print("Please enter the dealt cards.\n")
+dealtCards = promptInput(5)
+print("Please enter your hand.\n")
+myCards = promptInput(2)
 myPlayableHand = dealtCards + myCards
+print(myPlayableHand)
 possibleOpponentHands = getPossibleHands(dealtCards)
 winCount = 0
 drawCount = 0
 for hand in possibleOpponentHands:
     match = higherThan(myPlayableHand, hand)
     if match==-1:
-        print(match, hand)
+        #print(match, hand)
+        continue
     elif match==0:
-        print(match, hand)
+        #print(match, hand)
+        continue
     if match==1:
         winCount = winCount+1
     elif match==-1:

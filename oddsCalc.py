@@ -8,6 +8,7 @@ def promptInput(numCards):
         while any(i == card for i in cards):
             card = parseInput(input("Card is already in play. Please try again: "))
         cards.append(card)
+    print(cards)
     return cards
 
 def parseInput(card):
